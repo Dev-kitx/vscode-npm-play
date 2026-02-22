@@ -202,12 +202,12 @@ describe("npm-play / Devkitx Script Runner - unit tests", () => {
 
   describe("getConfiguredPackageManager", () => {
     it("returns configured value when set to npm/yarn/pnpm", () => {
-      (vscode as any).__setConfig("devkitxScripts.packageManager", "yarn");
+      (vscode as any).__setConfig("npmPlay.packageManager", "yarn");
       expect(__test__.getConfiguredPackageManager("/repo")).toBe("yarn");
     });
 
     it("uses auto detection when config is auto", () => {
-      (vscode as any).__setConfig("devkitxScripts.packageManager", "auto");
+      (vscode as any).__setConfig("npmPlay.packageManager", "auto");
       (fs.accessSync as any).mockImplementation((p: string) => {
         if (p.endsWith("pnpm-lock.yaml")) return;
         throw new Error("no");
@@ -300,14 +300,14 @@ describe("npm-play / Devkitx Script Runner - unit tests", () => {
 
   describe("confirmDanger", () => {
     it("returns true when dangerConfirm disabled", async () => {
-      (vscode as any).__setConfig("devkitxScripts.dangerConfirm", false);
+      (vscode as any).__setConfig("npmPlay.dangerConfirm", false);
       const ok = await __test__.confirmDanger("clean");
       expect(ok).toBe(true);
       expect(vscode.window.showWarningMessage).not.toHaveBeenCalled();
     });
 
     it("shows modal and returns true only when user picks Run", async () => {
-      (vscode as any).__setConfig("devkitxScripts.dangerConfirm", true);
+      (vscode as any).__setConfig("npmPlay.dangerConfirm", true);
       (vscode.window.showWarningMessage as any).mockResolvedValueOnce("Run");
       const ok = await __test__.confirmDanger("clean");
       expect(ok).toBe(true);
@@ -354,7 +354,7 @@ describe("npm-play / Devkitx Script Runner - unit tests", () => {
 
       const token = { isCancellationRequested: false } as any;
 
-      (vscode as any).__setConfig("devkitxScripts.showDebugLens", false);
+      (vscode as any).__setConfig("npmPlay.showDebugLens", false);
 
       const lenses = provider.provideCodeLenses(document, token);
 

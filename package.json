@@ -17,22 +17,22 @@
     "contributes": {
         "commands": [
             {
-                "command": "devkitxScripts.runScript",
+                "command": "npmPlay.runScript",
                 "title": "Devkitx: Run package.json Script"
             },
             {
-                "command": "devkitxScripts.runScriptDebug",
+                "command": "npmPlay.runScriptDebug",
                 "title": "Devkitx: Debug package.json Script"
             },
             {
-                "command": "devkitxScripts.launcher",
+                "command": "npmPlay.launcher",
                 "title": "Devkitx: Script Launcher"
             }
         ],
         "configuration": {
             "title": "Devkitx Script Runner",
             "properties": {
-                "devkitxScripts.packageManager": {
+                "npmPlay.packageManager": {
                     "type": "string",
                     "enum": [
                         "auto",
@@ -43,27 +43,27 @@
                     "default": "auto",
                     "description": "Which package manager to use. 'auto' picks based on lock files."
                 },
-                "devkitxScripts.showDebugLens": {
+                "npmPlay.showDebugLens": {
                     "type": "boolean",
                     "default": false,
                     "description": "Show a Debug CodeLens for scripts."
                 },
-                "devkitxScripts.terminalName": {
+                "npmPlay.terminalName": {
                     "type": "string",
                     "default": "Devkitx Scripts",
                     "description": "Name of the integrated terminal used to run scripts."
                 },
-                "devkitxScripts.enableStatusBar": {
+                "npmPlay.enableStatusBar": {
                     "type": "boolean",
                     "default": true,
                     "description": "Show Devkitx ▶ status bar launcher."
                 },
-                "devkitxScripts.dangerConfirm": {
+                "npmPlay.dangerConfirm": {
                     "type": "boolean",
                     "default": true,
                     "description": "Ask for confirmation before running potentially destructive scripts (clean/rm/reset/prune/etc.)."
                 },
-                "devkitxScripts.terminalPerScript": {
+                "npmPlay.terminalPerScript": {
                     "type": "boolean",
                     "default": true,
                     "description": "Use a dedicated terminal per script (better reuse + clearer output)."
