@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"  # Specifies the ecosystem (npm for Node.js)
+    directory: "/"  # Directory where your `package.json` and `package-lock.json` are located, usually the root directory
+    schedule:
+      interval: "weekly"  # How often to check for updates (daily, weekly, monthly)    
+    rebase-strategy: "auto"  # Auto rebase PRs to ensure the branch is up to date
+    assignees:
+      - "aakashbasa"
+
+    # Optionally include or exclude certain types of updates:
+    # Only for production dependencies (not devDependencies)
+    labels:
+      - "dependencies"  # Add labels to PRs created by Dependabot
+    commit-message:
+      prefix: "chore"  # Customize the commit message prefix
+    pull-request-branch-name:
+      separator: "_"  # Customize the branch name separator (default is '-')
