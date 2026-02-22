@@ -72,9 +72,11 @@
         }
     },
     "scripts": {
+        "typecheck": "tsc -p . --noEmit",
         "bundle": "node esbuild.js",
         "bundle:watch": "node esbuild.js --watch",
         "vscode:prepublish": "npm run typecheck && npm run bundle",
+        "watch": "tsc -watch -p .",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
