@@ -1,0 +1,107 @@
+{
+    "name": "npm-script-runner",
+    "displayName": "npm Script Runner",
+    "description": "Adds ▶ Run CodeLens actions for package.json scripts.",
+    "version": "0.0.1",
+    "publisher": "devkitx",
+    "engines": {
+        "vscode": "^1.109.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "workspaceContains:package.json"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "devkitxScripts.runScript",
+                "title": "Devkitx: Run package.json Script"
+            },
+            {
+                "command": "devkitxScripts.runScriptDebug",
+                "title": "Devkitx: Debug package.json Script"
+            },
+            {
+                "command": "devkitxScripts.launcher",
+                "title": "Devkitx: Script Launcher"
+            }
+        ],
+        "configuration": {
+            "title": "Devkitx Script Runner",
+            "properties": {
+                "devkitxScripts.packageManager": {
+                    "type": "string",
+                    "enum": [
+                        "auto",
+                        "npm",
+                        "yarn",
+                        "pnpm"
+                    ],
+                    "default": "auto",
+                    "description": "Which package manager to use. 'auto' picks based on lock files."
+                },
+                "devkitxScripts.showDebugLens": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show a Debug CodeLens for scripts."
+                },
+                "devkitxScripts.terminalName": {
+                    "type": "string",
+                    "default": "Devkitx Scripts",
+                    "description": "Name of the integrated terminal used to run scripts."
+                },
+                "devkitxScripts.enableStatusBar": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show Devkitx ▶ status bar launcher."
+                },
+                "devkitxScripts.dangerConfirm": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Ask for confirmation before running potentially destructive scripts (clean/rm/reset/prune/etc.)."
+                },
+                "devkitxScripts.terminalPerScript": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Use a dedicated terminal per script (better reuse + clearer output)."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "bundle": "node esbuild.js",
+        "bundle:watch": "node esbuild.js --watch",
+        "vscode:prepublish": "npm run typecheck && npm run bundle",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "deploy": "vsce publish"
+    },
+    "devDependencies": {
+        "@types/node": "^20.19.33",
+        "@types/vscode": "^1.109.0",
+        "@vitest/coverage-v8": "^4.0.18",
+        "esbuild": "^0.27.3",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18"
+    },
+      "keywords": [
+        "vscode",
+        "extension",
+        "npm",
+        "yarn",
+        "pnpm",
+        "dependency management",
+        "dev tools"
+    ],
+    "author": "akashb",
+    "license": "MIT",
+    "galleryBanner": {
+        "color": "#0f172a",
+        "theme": "dark"
+    }
+}
+    
