@@ -302,7 +302,7 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
       lenses.push(
         new vscode.CodeLens(range, {
           title: `▶ ${name}${badge ? `  ${badge}` : ""}`,
-          tooltip,
+          tooltip: tooltip.value,
           command: "devkitxScripts.runScript",
           arguments: [data]
         })
@@ -314,7 +314,7 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
             title: `🐞 Debug`,
             tooltip: new vscode.MarkdownString(
               "Runs with `NODE_OPTIONS=--inspect-brk` (best-effort)."
-            ),
+            ).value,
             command: "devkitxScripts.runScriptDebug",
             arguments: [data]
           })
@@ -541,3 +541,23 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {}
+
+// ---- test exports (no runtime impact) ----
+export const __test__ = {
+  readJsonFile,
+  fileExists,
+  detectPackageManager,
+  getConfiguredPackageManager,
+  makeScriptKey,
+  loadStatsMap,
+  saveStatsMap,
+  getOrInitStatus,
+  isDangerous,
+  formatWhen,
+  buildRunCommand,
+  buildDebugCommand,
+  findScriptKeyLine,
+  makeTask,
+  confirmDanger,
+  PackageJsonScriptsCodeLensProvider,
+};
