@@ -20,8 +20,8 @@ type ScriptRunStatus = {
   runCount: number;
 };
 
-const STATE_SCRIPT_STATS = "devkitxScripts.stats.v1"; // workspaceState (map)
-const TASK_TYPE = "devkitxScripts";
+const STATE_SCRIPT_STATS = "npmPlay.stats.v1"; // workspaceState (map)
+const TASK_TYPE = "npmPlay";
 
 function readJsonFile<T>(filePath: string): T | undefined {
   try {
@@ -50,7 +50,7 @@ function detectPackageManager(cwd: string): "npm" | "yarn" | "pnpm" {
 
 function getConfiguredPackageManager(cwd: string): "npm" | "yarn" | "pnpm" {
   const cfg = vscode.workspace.getConfiguration();
-  const setting = cfg.get<string>("devkitxScripts.packageManager", "auto");
+  const setting = cfg.get<string>("npmPlay.packageManager", "auto");
   if (setting === "npm" || setting === "yarn" || setting === "pnpm") return setting;
   return detectPackageManager(cwd);
 }
@@ -181,7 +181,7 @@ function makeTask(
 
 async function confirmDanger(scriptName: string): Promise<boolean> {
   const cfg = vscode.workspace.getConfiguration();
-  const enabled = cfg.get<boolean>("devkitxScripts.dangerConfirm", true);
+  const enabled = cfg.get<boolean>("npmPlay.dangerConfirm", true);
   if (!enabled) return true;
 
   const pick = await vscode.window.showWarningMessage(
@@ -200,10 +200,10 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
   constructor() {
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (
-        e.affectsConfiguration("devkitxScripts.packageManager") ||
-        e.affectsConfiguration("devkitxScripts.showDebugLens") ||
-        e.affectsConfiguration("devkitxScripts.dangerConfirm") ||
-        e.affectsConfiguration("devkitxScripts.terminalPerScript")
+        e.affectsConfiguration("npmPlay.packageManager") ||
+        e.affectsConfiguration("npmPlay.showDebugLens") ||
+        e.affectsConfiguration("npmPlay.dangerConfirm") ||
+        e.affectsConfiguration("npmPlay.terminalPerScript")
       ) {
         this._onDidChangeCodeLenses.fire();
       }
@@ -230,7 +230,7 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
 
     const showDebug = vscode.workspace
       .getConfiguration()
-      .get<boolean>("devkitxScripts.showDebugLens", false);
+      .get<boolean>("npmPlay.showDebugLens", false);
 
     const text = document.getText();
     const lenses: vscode.CodeLens[] = [];
@@ -303,7 +303,7 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
         new vscode.CodeLens(range, {
           title: `▶ ${name}${badge ? `  ${badge}` : ""}`,
           tooltip: tooltip.value,
-          command: "devkitxScripts.runScript",
+          command: "npmPlay.runScript",
           arguments: [data]
         })
       );
@@ -315,7 +315,7 @@ class PackageJsonScriptsCodeLensProvider implements vscode.CodeLensProvider {
             tooltip: new vscode.MarkdownString(
               "Runs with `NODE_OPTIONS=--inspect-brk` (best-effort)."
             ).value,
-            command: "devkitxScripts.runScriptDebug",
+            command: "npmPlay.runScriptDebug",
             arguments: [data]
           })
         );
@@ -360,7 +360,7 @@ async function runScript(
 
   const perScriptTerminal = vscode.workspace
     .getConfiguration()
-    .get<boolean>("devkitxScripts.terminalPerScript", true);
+    .get<boolean>("npmPlay.terminalPerScript", true);
 
   const cmdLine = debug
     ? buildDebugCommand(pm, scriptName)
@@ -494,7 +494,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "devkitxScripts.runScript",
+      "npmPlay.runScript",
       async (data: ScriptLensData) => {
         if (!data?.cwd || !data?.scriptName) return;
         await runScript(context, data.cwd, data.scriptName, data.scriptCmd, false);
@@ -503,7 +503,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     vscode.commands.registerCommand(
-      "devkitxScripts.runScriptDebug",
+      "npmPlay.runScriptDebug",
       async (data: ScriptLensData) => {
         if (!data?.cwd || !data?.scriptName) return;
         await runScript(context, data.cwd, data.scriptName, data.scriptCmd, true);
@@ -511,7 +511,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     ),
 
-    vscode.commands.registerCommand("devkitxScripts.launcher", async () => {
+    vscode.commands.registerCommand("npmPlay.launcher", async () => {
       await runLauncher(context);
       provider.setContext(context);
     })
@@ -520,7 +520,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Status bar launcher (now "npm-play" by default)
   const enableStatusBar = vscode.workspace
     .getConfiguration()
-    .get<boolean>("devkitxScripts.enableStatusBar", true);
+    .get<boolean>("npmPlay.enableStatusBar", true);
 
   if (enableStatusBar) {
     const item = vscode.window.createStatusBarItem(
@@ -530,11 +530,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     const statusText = vscode.workspace
       .getConfiguration()
-      .get<string>("devkitxScripts.statusBarText", "npm-play ▶");
+      .get<string>("npmPlay.statusBarText", "npm-play ▶");
 
     item.text = statusText;
     item.tooltip = "npm-play: Script Launcher";
-    item.command = "devkitxScripts.launcher";
+    item.command = "npmPlay.launcher";
     item.show();
     context.subscriptions.push(item);
   }
