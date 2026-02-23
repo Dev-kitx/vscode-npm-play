@@ -3,7 +3,7 @@
     "displayName": "npm Scripts Play ▶",
     "description": "Adds ▶ Run CodeLens actions for package.json scripts.",
     "version": "0.0.1",
-    "publisher": "devkitx",
+    "publisher": "Dev-kitx",
     "engines": {
         "vscode": "^1.109.0"
     },
