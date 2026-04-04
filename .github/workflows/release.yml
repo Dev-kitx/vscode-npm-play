@@ -25,6 +25,9 @@ name: Release Vscode NPM Play Extension
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'codecov.yml'
 
 permissions:
   contents: write
