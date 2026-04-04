@@ -1,0 +1,38 @@
+coverage:
+  # Fail the check if overall project coverage drops below the current baseline
+  status:
+    project:
+      default:
+        target: auto       # never drop below whatever the first upload establishes (~46%)
+        threshold: 2%      # allow up to 2% wiggle before failing
+        if_no_uploads: error
+        if_not_found: failure
+    patch:
+      default:
+        target: 50%        # new/changed lines in a PR should be at least 50% covered
+        threshold: 5%
+        if_no_uploads: error
+
+# Files / paths to exclude from coverage reporting
+ignore:
+  - "node_modules/**"
+  - "dist/**"
+  - "out/**"
+  - "coverage/**"
+  - "tests/**"
+  - "esbuild.js"
+  - "vitest.config.ts"
+  - "**/*.d.ts"
+
+# One flag for the unit test suite — makes it easy to add more later (e.g. integration)
+flags:
+  unit:
+    paths:
+      - src/
+    carryforward: true     # keep last upload if a run is skipped
+
+comment:
+  layout: "reach,diff,flags,files"
+  behavior: default        # update existing PR comment rather than posting a new one
+  require_changes: true    # only comment when coverage actually changes
+  hide_project_coverage: false

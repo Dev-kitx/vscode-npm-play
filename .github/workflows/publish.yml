@@ -1,0 +1,11 @@
+name: Publish to Marketplace
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    uses: Dev-kitx/.github/.github/workflows/vscode-extension-publish.yml@main
+    secrets: inherit

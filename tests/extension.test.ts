@@ -57,6 +57,28 @@ vi.mock("vscode", () => {
     ) {}
   }
 
+  class TreeItem {
+    label: string;
+    collapsibleState: number;
+    description?: string;
+    iconPath?: any;
+    tooltip?: any;
+    command?: any;
+    contextValue?: string;
+    constructor(label: string, collapsibleState: number = 0) {
+      this.label = label;
+      this.collapsibleState = collapsibleState;
+    }
+  }
+
+  class ThemeIcon {
+    constructor(public id: string, public color?: any) {}
+  }
+
+  class ThemeColor {
+    constructor(public id: string) {}
+  }
+
   const configStore = new Map<string, any>();
 
   const vscodeMock = {
@@ -67,6 +89,11 @@ vi.mock("vscode", () => {
     EventEmitter,
     ShellExecution,
     Task,
+    TreeItem,
+    ThemeIcon,
+    ThemeColor,
+    TreeItemCollapsibleState: { None: 0, Collapsed: 1, Expanded: 2 },
+    QuickPickItemKind: { Separator: -1, Default: 0 },
     TaskScope: { Workspace: "Workspace" },
     TaskRevealKind: { Always: "Always" },
     TaskPanelKind: { Dedicated: "Dedicated", Shared: "Shared" },
@@ -100,6 +127,7 @@ vi.mock("vscode", () => {
         command: "",
         show: vi.fn(),
       })),
+      registerTreeDataProvider: vi.fn(() => ({ dispose: () => {} })),
     },
     tasks: {
       executeTask: vi.fn(async () => undefined),
@@ -318,6 +346,109 @@ describe("npm-play / Devkitx Script Runner - unit tests", () => {
     });
   });
 
+  describe("formatDuration", () => {
+    it("formats milliseconds below 1s", () => {
+      expect(__test__.formatDuration(500)).toBe("500ms");
+    });
+
+    it("formats seconds with one decimal", () => {
+      expect(__test__.formatDuration(3500)).toBe("3.5s");
+    });
+
+    it("formats minutes and seconds", () => {
+      expect(__test__.formatDuration(90_000)).toBe("1m 30s");
+      expect(__test__.formatDuration(60_000)).toBe("1m");
+    });
+  });
+
+  describe("pruneStatsMap", () => {
+    it("removes entries older than 30 days", () => {
+      const old = Date.now() - 31 * 24 * 60 * 60 * 1000;
+      const map: any = {
+        "a::build": { running: false, runCount: 1, lastRunAt: old },
+        "a::test": { running: false, runCount: 1, lastRunAt: Date.now() },
+      };
+      const pruned = __test__.pruneStatsMap(map);
+      expect(pruned["a::build"]).toBeUndefined();
+      expect(pruned["a::test"]).toBeDefined();
+    });
+
+    it("keeps entries with no lastRunAt (never run externally)", () => {
+      const map: any = {
+        "a::build": { running: false, runCount: 0 },
+      };
+      const pruned = __test__.pruneStatsMap(map);
+      expect(pruned["a::build"]).toBeDefined();
+    });
+  });
+
+  describe("loadPinnedSet / savePinnedSet", () => {
+    it("returns empty set when nothing stored", () => {
+      const fakeCtx = {
+        workspaceState: {
+          get: vi.fn((_k: string, def: any) => def),
+          update: vi.fn(),
+        },
+      } as any;
+      const set = __test__.loadPinnedSet(fakeCtx);
+      expect(set.size).toBe(0);
+    });
+
+    it("round-trips pinned keys", async () => {
+      const store = new Map<string, any>();
+      const fakeCtx = {
+        workspaceState: {
+          get: vi.fn((k: string, def: any) => store.get(k) ?? def),
+          update: vi.fn(async (k: string, v: any) => { store.set(k, v); }),
+        },
+      } as any;
+
+      const set = new Set(["/repo::build", "/repo::test"]);
+      await __test__.savePinnedSet(fakeCtx, set);
+      const loaded = __test__.loadPinnedSet(fakeCtx);
+      expect(loaded.has("/repo::build")).toBe(true);
+      expect(loaded.has("/repo::test")).toBe(true);
+      expect(loaded.size).toBe(2);
+    });
+  });
+
+  describe("ScriptHistoryProvider", () => {
+    it("returns items sorted by lastRunAt descending", () => {
+      const now = Date.now();
+      const fakeCtx = {
+        workspaceState: {
+          get: vi.fn((_k: string, def: any) => ({
+            "/repo::build": { running: false, runCount: 2, lastRunAt: now - 5000, lastExitCode: 0 },
+            "/repo::test": { running: false, runCount: 1, lastRunAt: now - 1000, lastExitCode: 1 },
+          })),
+        },
+      } as any;
+
+      const hp = new __test__.ScriptHistoryProvider();
+      hp.setContext(fakeCtx);
+      const children = hp.getChildren();
+
+      expect(children.length).toBe(2);
+      // test ran more recently so should be first
+      expect(children[0].scriptName).toBe("test");
+      expect(children[1].scriptName).toBe("build");
+    });
+
+    it("excludes scripts that have never run", () => {
+      const fakeCtx = {
+        workspaceState: {
+          get: vi.fn((_k: string, def: any) => ({
+            "/repo::build": { running: false, runCount: 0 }, // no lastRunAt
+          })),
+        },
+      } as any;
+
+      const hp = new __test__.ScriptHistoryProvider();
+      hp.setContext(fakeCtx);
+      expect(hp.getChildren().length).toBe(0);
+    });
+  });
+
   describe("CodeLens provider", () => {
     it("creates lenses for each script and includes badge based on status map", () => {
       // mock package.json content
@@ -362,8 +493,25 @@ describe("npm-play / Devkitx Script Runner - unit tests", () => {
 
       const titles = lenses.map((l: any) => l.command?.title);
       // build should have ✔, test should have ●
+      // duration suffix may or may not appear (no lastDurationMs in this fixture → no suffix)
       expect(titles.find((t: string) => t.includes("build"))).toContain("✔");
       expect(titles.find((t: string) => t.includes("test"))).toContain("●");
+
+      // With lastDurationMs set, duration appears in the title
+      const fakeCtxWithDuration = {
+        workspaceState: {
+          get: vi.fn((_k: string, def: any) => ({
+            "/repo::build": { running: false, runCount: 1, lastExitCode: 0, lastRunAt: Date.now() - 1000, lastDurationMs: 3500 },
+          })),
+          update: vi.fn(),
+        },
+      } as any;
+      provider.setContext(fakeCtxWithDuration);
+      (fs.readFileSync as any).mockReturnValueOnce(
+        JSON.stringify({ scripts: { build: "tsc -p ." } })
+      );
+      const lenses2 = provider.provideCodeLenses(document, token);
+      expect(lenses2[0].command?.title).toContain("3.5s");
     });
   });
 });

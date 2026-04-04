@@ -12,8 +12,11 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html", "lcov"],
       reportsDirectory: "./coverage",
+      // Report all source files, not just the ones imported during tests
+      include: ["src/**/*.ts"],
       exclude: [
         "node_modules/",
+        "dist/",
         "out/",
         "**/*.d.ts",
         "tests/",

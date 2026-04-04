@@ -27,6 +27,14 @@
             {
                 "command": "npmPlay.launcher",
                 "title": "Devkitx: Script Launcher"
+            },
+            {
+                "command": "npmPlay.togglePin",
+                "title": "Devkitx: Pin / Unpin Script"
+            },
+            {
+                "command": "npmPlay.rerunFromHistory",
+                "title": "Devkitx: Re-run Script from History"
             }
         ],
         "configuration": {
@@ -67,8 +75,22 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Use a dedicated terminal per script (better reuse + clearer output)."
+                },
+                "npmPlay.notifyAfterMs": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Show a notification when a script finishes and took longer than this many milliseconds. Set to 0 to disable (default)."
                 }
             }
+        },
+        "views": {
+            "explorer": [
+                {
+                    "id": "npmPlay.historyView",
+                    "name": "Script History",
+                    "when": "workspaceContains:package.json"
+                }
+            ]
         }
     },
     "scripts": {
