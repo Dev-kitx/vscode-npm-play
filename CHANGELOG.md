@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 
 
+
+## [v0.1.2] - 2026-04-07
+
+### 📦 Build
+
+- use reusable workflows ([22bd2fd](https://github.com/Dev-kitx/vscode-npm-play/commit/22bd2fd9620794c09c6ba25af8201fee02f29f60)) by @aakashbasa
+
+### 📌 Other Changes
+
+- ignore package file ([1ec5a47](https://github.com/Dev-kitx/vscode-npm-play/commit/1ec5a47f37e13f9ac2240bcc585c91c692778dfb)) by @aakashbasa
+- Merge pull request #18 from Dev-kitx/reusable-workflow-for-git-release ([37f4bad](https://github.com/Dev-kitx/vscode-npm-play/commit/37f4bada15b634405d96dd9373b387476a63dc0b)) by @aakashbasa
+
 ## [v0.1.1] - 2026-04-04
 
 ### 🐛 Bug Fixes
