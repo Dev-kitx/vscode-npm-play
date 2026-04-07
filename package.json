@@ -4,6 +4,15 @@
     "description": "Adds ▶ Run CodeLens actions for package.json scripts.",
     "version": "0.1.2",
     "publisher": "Dev-kitx",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Dev-kitx/vscode-npm-play"
+    },
+    "bugs": {
+        "url": "https://github.com/Dev-kitx/vscode-npm-play/issues"
+    },
+    "homepage": "https://github.com/Dev-kitx/vscode-npm-play#readme",
+    "icon": "images/icon.png",
     "engines": {
         "vscode": "^1.109.0"
     },
