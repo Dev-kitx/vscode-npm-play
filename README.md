@@ -1,5 +1,11 @@
 # 🚀 npm-play — Run npm scripts like a pro
 
+[![Latest Release](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FDev-kitx%2Fvscode-npm-play%2Fmain%2F.github%2Fbadges%2Frelease.json)](https://github.com/Dev-kitx/vscode-npm-play/releases/latest)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/Dev-kitx.npm-scripts-play?label=VS%20Marketplace&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=Dev-kitx.npm-scripts-play)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/Dev-kitx.npm-scripts-play)](https://marketplace.visualstudio.com/items?itemName=Dev-kitx.npm-scripts-play)
+[![codecov](https://codecov.io/gh/Dev-Kitx/vscode-npm-play/branch/main/graph/badge.svg)](https://codecov.io/gh/Dev-Kitx/vscode-npm-play)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **npm-play** is a lightweight VS Code extension that lets you run, debug, and monitor
 `package.json` scripts directly from the editor — with zero config and zero friction.
 
