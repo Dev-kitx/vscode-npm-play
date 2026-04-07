@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.4] - 2026-04-07
+
+### 🐛 Bug Fixes
+
+- Remove icon property from package.json (#22) ([9aaf2fe](https://github.com/Dev-kitx/vscode-npm-play/commit/9aaf2fe8230b09edbd5dcd4c1213c996d64b381c)) by @aakashbasa
+
 ## [v0.1.3] - 2026-04-07
 
 ### 🐛 Bug Fixes
