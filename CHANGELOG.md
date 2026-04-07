@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.3] - 2026-04-07
+
+### 🐛 Bug Fixes
+
+- missing repo name ([117d80f](https://github.com/Dev-kitx/vscode-npm-play/commit/117d80fe88d36dcfbb013ba68f33c0559d96a365)) by @aakashbasa
+
+### 📌 Other Changes
+
+- Merge pull request #20 from Dev-kitx/fix/build ([2eee1f1](https://github.com/Dev-kitx/vscode-npm-play/commit/2eee1f17f6aa22731ed5f91e868ded6e53d65c5e)) by @aakashbasa
+
 ## [v0.1.2] - 2026-04-07
 
 ### 📦 Build
