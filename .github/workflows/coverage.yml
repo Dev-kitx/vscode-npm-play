@@ -8,7 +8,7 @@ on:
       - 'CHANGELOG.md'
       - 'codecov.yml'
       - 'package.json'
-      - 'badges/**'
+      - '.github/badges/**'
   pull_request:
     branches: [main]
     paths-ignore:
@@ -16,7 +16,7 @@ on:
       - 'CHANGELOG.md'
       - 'codecov.yml'
       - 'package.json'
-      - 'badges/**'
+      - '.github/badges/**'
   workflow_dispatch:
 
 concurrency:
