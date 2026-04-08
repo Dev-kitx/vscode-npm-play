@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.6] - 2026-04-08
+
+### 🔧 Maintenance
+
+- update vscode engine to 1.110.0 (#26) ([cc12325](https://github.com/Dev-kitx/vscode-npm-play/commit/cc12325e089ad4e965539ea8a2665ea06916358f)) by @aakashbasa
+
 ## [v0.1.5] - 2026-04-08
 
 _No notable changes._
