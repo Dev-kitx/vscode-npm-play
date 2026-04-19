@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.7] - 2026-04-19
+
+### 🐛 Bug Fixes
+
+- module resolution dependency issue (#36) ([0d0f4d0](https://github.com/Dev-kitx/vscode-npm-play/commit/0d0f4d0faaec85a67415055ef983fce1fd71684e)) by @aakashbasa
+
+### 📌 Other Changes
+
+- AKA-12: grouped dependabot pr's (#33) ([501b977](https://github.com/Dev-kitx/vscode-npm-play/commit/501b977b419c8c248843c6c35efa0d9ad178bf47)) by @aakashbasa
+
 ## [v0.1.6] - 2026-04-08
 
 ### 🔧 Maintenance

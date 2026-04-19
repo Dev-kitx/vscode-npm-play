@@ -2,7 +2,7 @@
     "name": "npm-scripts-play",
     "displayName": "npm Scripts Play ▶",
     "description": "Adds ▶ Run CodeLens actions for package.json scripts.",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "publisher": "Dev-kitx",
     "repository": {
         "type": "git",
