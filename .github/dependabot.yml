@@ -16,3 +16,7 @@ updates:
       prefix: "chore"  # Customize the commit message prefix
     pull-request-branch-name:
       separator: "_"  # Customize the branch name separator (default is '-')
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
