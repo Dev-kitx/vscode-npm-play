@@ -10,6 +10,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.9] - 2026-06-01
+
+### 📌 Other Changes
+
+- Update VS Code engine version to ^1.118.0 (#41) ([185e812](https://github.com/Dev-kitx/vscode-npm-play/commit/185e8128d939bc607f3c1378454bd5a3c792abe9)) by @aakashbasa
+
 ## [v0.1.8] - 2026-06-01
 
 _No notable changes._
