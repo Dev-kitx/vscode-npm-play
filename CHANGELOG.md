@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.8] - 2026-06-01
+
+_No notable changes._
+
 ## [v0.1.7] - 2026-04-19
 
 ### 🐛 Bug Fixes
