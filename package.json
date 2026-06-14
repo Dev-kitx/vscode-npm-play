@@ -113,10 +113,10 @@
         "deploy": "vsce publish"
     },
     "devDependencies": {
-        "@types/node": "^25.6.2",
-        "@types/vscode": "^1.118.0",
-        "@vitest/coverage-v8": "^4.1.5",
-        "esbuild": "^0.28.0",
+        "@types/node": "^25.9.3",
+        "@types/vscode": "^1.120.0",
+        "@vitest/coverage-v8": "^4.1.8",
+        "esbuild": "^0.28.1",
         "typescript": "^6.0.3",
         "vitest": "^4.1.3"
     },
