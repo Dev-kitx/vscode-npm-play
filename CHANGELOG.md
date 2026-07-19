@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.10] - 2026-07-19
+
+### 🔧 Maintenance
+
+- grouped dependabot PRs #44, #46, #47 + bump engines.vscode to ^1.125.0 (#48) ([894bd58](https://github.com/Dev-kitx/vscode-npm-play/commit/894bd585969581d4dd195b459db279a2663d3658)) by @aakashbasa
+
 ## [v0.1.9] - 2026-06-01
 
 ### 📌 Other Changes
