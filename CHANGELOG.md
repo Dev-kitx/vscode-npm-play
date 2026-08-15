@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v0.1.11] - 2026-08-15
+
+### 🔧 Maintenance
+
+- grouped dependabot PRs #52, #53 (#54) ([f9243aa](https://github.com/Dev-kitx/vscode-npm-play/commit/f9243aae6c7d8616a2dd54584d24a523f2c32cc0)) by @aakashbasa
+
 ## [v0.1.10] - 2026-07-19
 
 ### 🔧 Maintenance
